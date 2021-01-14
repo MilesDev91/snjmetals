@@ -13,6 +13,5 @@
   background-color: rgb(251, 203, 45);
   padding: 1px 20px 10px 20px;
   border-top: 1px solid black;
-  width: 100%;
 }
 </style>

@@ -1,20 +1,14 @@
 <template>
   <div>
     <u-header></u-header>
-    <div id="app"></div>
+    <div id="app">
+      <categorized-item></categorized-item>
+    </div>
     <u-footer></u-footer>
   </div>
 </template>
 
 <script>
-export default {
-  name: "app",
-  data() {
-    return {
-      msg: "Welcome to Your Vue.js App",
-    };
-  },
-};
 </script>
 
 <style>
@@ -22,11 +16,11 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   padding-top: 99px;
   min-height: 100vh;
   color: #2c3e50;
   background-color: rgb(240, 240, 240);
+  display: flex;
 }
 
 body {
