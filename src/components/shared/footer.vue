@@ -10,11 +10,9 @@
 <style scoped>
 .footer {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  background-color: rgb(253, 214, 84);
-  padding: 1px 20px 30px 20px;
-  border-top: 2px solid black;
-  position: fixed;
-  bottom: 0;
+  background-color: rgb(251, 203, 45);
+  padding: 1px 20px 10px 20px;
+  border-top: 1px solid black;
   width: 100%;
 }
 </style>
