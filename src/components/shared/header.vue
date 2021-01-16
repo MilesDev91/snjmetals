@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h2 class="logo">SnJ Metals</h2>
+    <h2 class="logo">J&S Metal Works and Engravings</h2>
     <ul>
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/checkout">Checkout</router-link></li>
@@ -39,5 +39,6 @@ a {
   color: black;
   cursor: pointer;
   text-decoration: none;
+  font-size: 20px;
 }
 </style>
