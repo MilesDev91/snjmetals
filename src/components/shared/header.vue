@@ -1,6 +1,11 @@
 <template>
   <div class="header">
     <h2 class="logo">SnJ Metals</h2>
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/checkout">Checkout</router-link></li>
+      <li><router-link to="/cart">Cart</router-link></li>
+    </ul>
   </div>
 </template>
 
@@ -17,5 +22,22 @@
   background-color: rgb(251, 203, 45);
   padding: 30px 20px 1px 40px;
   border-bottom: 1px solid black;
+  display: flex;
+}
+
+.logo {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+ul {
+  align-self: center;
+  margin-left: auto;
+}
+
+a {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
 }
 </style>

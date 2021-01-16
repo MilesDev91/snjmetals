@@ -1,10 +1,6 @@
 <template>
   <div class="card">
-    <img
-      src="https://agmetalminer.com/mmwp/wp-content/uploads/2019/03/Maksym_Yemelyanov_Adobe_Stock_stainless_030819.jpg"
-      alt=""
-    />
-    <p>Example Image</p>
+    <slot></slot>
   </div>
 </template>
 

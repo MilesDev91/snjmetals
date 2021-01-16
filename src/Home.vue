@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <u-header></u-header>
-    <router-view></router-view>
-    <u-footer></u-footer>
+  <div id="app">
+    <!-- This will be where all the Categories with images go -->
+    <categorized-item>
+      <img
+        src="https://agmetalminer.com/mmwp/wp-content/uploads/2019/03/Maksym_Yemelyanov_Adobe_Stock_stainless_030819.jpg"
+        alt=""
+      />
+      <p>Example Image</p>
+    </categorized-item>
+    <!-- End of categories -->
   </div>
 </template>
 
 <script>
 </script>
 
-<style>
+<style scoped>
 #app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: 99px;
@@ -22,7 +29,6 @@
 
 body {
   margin: 0;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 
 h1,
