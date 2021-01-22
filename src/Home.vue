@@ -4,7 +4,9 @@
     <div class="card" v-for="item in items" :key="item.id">
       <img :src="item.imagePath" alt="" />
       <p>{{ item.name }}</p>
-      <button>+Add to cart</button>
+      <button @click="addToCart(item.id, item.name, item.imagePath)">
+        +Add to cart
+      </button>
     </div>
     <!-- End of categories -->
   </div>
@@ -13,8 +15,19 @@
 <script>
 import { itemIDs } from "./item_ids";
 export default {
-  data: function () {
+  props: ["cartCount"],
+  data() {
     return { items: itemIDs };
+  },
+  methods: {
+    addToCart(x, y, z) {
+      var cartObject = {
+        id: this.cartCount,
+        name: y,
+        imagePath: z,
+      };
+      this.$emit("addCartObject", cartObject);
+    },
   },
 };
 </script>
@@ -24,7 +37,7 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 99px;
+  padding-top: 7rem;
   min-height: 100vh;
   color: #2c3e50;
   background-color: rgb(240, 240, 240);
@@ -47,7 +60,7 @@ ul {
 
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 1rem;
 }
 
 a {
@@ -68,7 +81,7 @@ a {
 
 .card > p {
   text-align: center;
-  padding: 10px 10px;
+  padding: 0.6rem 0.6rem;
 }
 
 img {
