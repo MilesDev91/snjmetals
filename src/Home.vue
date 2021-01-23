@@ -4,7 +4,8 @@
     <div class="card" v-for="item in items" :key="item.id">
       <img :src="item.imagePath" alt="" />
       <p>{{ item.name }}</p>
-      <button @click="addToCart(item.id, item.name, item.imagePath)">
+      <p>Price: ${{ item.price }}</p>
+      <button @click="addToCart(item.name, item.imagePath, item.price)">
         +Add to cart
       </button>
     </div>
@@ -23,8 +24,10 @@ export default {
     addToCart(x, y, z) {
       var cartObject = {
         id: this.cartCount,
-        name: y,
-        imagePath: z,
+        name: x,
+        imagePath: y,
+        price: z,
+        quantity: 1,
       };
       this.$emit("addCartObject", cartObject);
     },
@@ -81,7 +84,8 @@ a {
 
 .card > p {
   text-align: center;
-  padding: 0.6rem 0.6rem;
+  padding: 0rem 0.6rem;
+  margin: 0.4rem;
 }
 
 img {
@@ -90,5 +94,6 @@ img {
 
 button {
   align-self: flex-end;
+  margin-top: 0.4rem;
 }
 </style>

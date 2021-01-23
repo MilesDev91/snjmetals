@@ -1,10 +1,12 @@
 <template>
   <div>
-    <u-header></u-header>
+    <u-header :cartCount="cartCount"></u-header>
     <router-view
+      :total="total"
       :cart="cart"
       :cartCount="cartCount"
       @addCartObject="addToCart($event)"
+      @removeFromCart="removeFromCart($event)"
     ></router-view>
     <u-footer></u-footer>
   </div>
@@ -16,15 +18,39 @@ export default {
     return {
       cart: [],
       cartCount: 0,
+      total: 0,
     };
   },
   methods: {
     addToCart(cartObject) {
+      //These lines check for an already existing cart item of the same name
+      if (this.cart.length > 0) {
+        for (var i = 0; i < this.cart.length; i++) {
+          if (cartObject.name == this.cart[i].name) {
+            this.cart[i].quantity += 1;
+            this.cartCount += 1;
+            this.total += cartObject.price;
+            console.log(this.cart);
+            return;
+          }
+        }
+      }
       this.cart.push(cartObject);
       this.cartCount += 1;
-      console.log("Cart added" + cartObject + "");
-      console.log(this.cart);
-      console.log(this.cartCount);
+      this.total += cartObject.price;
+    },
+    removeFromCart(itemName) {
+      for (var i = 0; i < this.cart.length; i++) {
+        if (itemName == this.cart[i].name) {
+          this.cart[i].quantity -= 1;
+          this.cartCount -= 1;
+          this.total -= this.cart[i].price;
+          if (this.cart[i].quantity == 0) {
+            this.cart.splice(i, 1);
+          }
+          return;
+        }
+      }
     },
   },
 };

@@ -4,12 +4,18 @@
     <ul>
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/checkout">Checkout</router-link></li>
-      <li><router-link to="/cart">Cart</router-link></li>
+      <li>
+        <router-link v-if="cartCount == 0" to="/cart">Cart</router-link>
+        <router-link v-else to="/cart">Cart({{ cartCount }})</router-link>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
+export default {
+  props: ["cartCount"],
+};
 </script>
 
 <style scoped>

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <u-header></u-header>
     <div></div>
-    <u-footer></u-footer>
   </div>
 </template>
 
