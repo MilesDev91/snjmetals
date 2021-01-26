@@ -42,4 +42,8 @@ export default {
 button {
   margin-bottom: 0.4rem;
 }
+
+img {
+  max-width: 100%;
+}
 </style>
