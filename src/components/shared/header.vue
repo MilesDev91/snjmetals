@@ -6,7 +6,10 @@
       <li><router-link to="/checkout">Checkout</router-link></li>
       <li>
         <router-link v-if="cartCount == 0" to="/cart">Cart</router-link>
-        <router-link v-else to="/cart">Cart({{ cartCount }})</router-link>
+        <router-link v-else to="/cart"
+          >Cart
+          <span style="font-weight: bold">({{ cartCount }})</span></router-link
+        >
       </li>
     </ul>
   </div>

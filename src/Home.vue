@@ -37,7 +37,6 @@ export default {
 
 <style scoped>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: 7rem;
@@ -72,11 +71,11 @@ a {
 }
 
 .card {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   max-height: 400px;
   max-width: 400px;
   box-shadow: 2px 2px 6px 0px rgb(88, 88, 88);
   border: 1px solid black;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   margin: 10px 10px;
@@ -94,7 +93,14 @@ img {
 }
 
 button {
-  align-self: flex-end;
-  margin-top: 0.4rem;
+  border-radius: 0.6rem;
+  padding: 0.3rem;
+  background-color: rgb(255, 181, 21);
+  align-self: center;
+  margin: 0 0.4rem;
+}
+
+button:focus {
+  outline: none;
 }
 </style>
