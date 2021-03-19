@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="body">
     <u-header :cartCount="cartCount"></u-header>
     <router-view
+      class="content"
       :total="total"
       :cart="cart"
       :cartCount="cartCount"
@@ -70,6 +71,16 @@ body {
   margin: 0;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   background-color: rgb(240, 240, 240);
+}
+
+.body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
 }
 
 h1,
