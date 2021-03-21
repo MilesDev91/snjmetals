@@ -14,11 +14,26 @@
 </template>
 
 <script>
-import { itemIDs } from "./item_ids";
 export default {
   props: ["cartCount"],
   data() {
-    return { items: itemIDs };
+    return {
+      items: [],
+    };
+  },
+  mounted() {
+    this.$http
+      .get("items.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const resultArray = [];
+        for (let key in data) {
+          resultArray.push(data[key]);
+        }
+        this.items = resultArray;
+      });
   },
   methods: {
     addToCart(x, y, z) {
@@ -90,17 +105,5 @@ a {
 
 img {
   max-width: 100%;
-}
-
-button {
-  border-radius: 0.6rem;
-  padding: 0.3rem;
-  background-color: rgb(255, 181, 21);
-  align-self: center;
-  margin: 0 0.4rem;
-}
-
-button:focus {
-  outline: none;
 }
 </style>
