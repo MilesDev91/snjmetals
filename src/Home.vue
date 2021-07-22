@@ -54,7 +54,7 @@ export default {
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 7rem;
+  padding-top: 10rem;
   min-height: 100vh;
   color: #2c3e50;
   background-color: rgb(240, 240, 240);

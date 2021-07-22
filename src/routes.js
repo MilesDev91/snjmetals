@@ -7,7 +7,7 @@ export const routes = [
   { path: '', component: Home },
   { path: '/checkout', component: Checkout },
   { path: '/cart', component: Cart },
-  { path: '/edititems', component: EditItems },
+  /*{ path: '/edititems', component: EditItems },*/
 
   //Catch-all route
   { path: '*', redirect: '/' }

@@ -10,7 +10,7 @@
 <style scoped>
 .footer {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  background-color: rgb(251, 203, 45);
+  background-color: rgb(221, 229, 230);
   padding: 1px 20px 10px 20px;
   border-top: 1px solid black;
 }
