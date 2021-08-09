@@ -1,26 +1,42 @@
 <template>
   <div class="body">
     <u-header :cartCount="cartCount"></u-header>
+    <h1 v-if="authenticated">Admin mode</h1>
     <router-view
       class="content"
+      :authenticated="authenticated"
       :total="total"
       :cart="cart"
       :cartCount="cartCount"
       @addCartObject="addToCart($event)"
       @removeFromCart="removeFromCart($event)"
+      @authenticated="setAuthenticated"
     ></router-view>
     <u-footer></u-footer>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
     return {
       cart: [],
       cartCount: 0,
       total: 0,
+      authenticated: false,
     };
+  },
+  // Check user status on update
+  beforeUpdate() {
+    // Observes authentication change and changes status if no user
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user == null) {
+        // Set authenticated to false
+        this.setAuthenticated(false);
+      }
+    });
   },
   methods: {
     addToCart(cartObject) {
@@ -53,10 +69,14 @@ export default {
         }
       }
     },
+    setAuthenticated(status) {
+      this.authenticated = status;
+    },
   },
 };
 </script>
 
+<!-- CSS Styling -->
 <style>
 #app {
   -webkit-font-smoothing: antialiased;

@@ -27,15 +27,21 @@
 
 <script>
 export default {
+  props: ["authenticated"],
   data() {
     return {
       item: {
         name: "",
         size: "20in by 20in",
         price: "",
-        imagePath: "static/",
+        imagePath: "",
       },
     };
+  },
+  mounted() {
+    if (!this.authenticated) {
+      this.$router.replace({ path: "/login" });
+    }
   },
   methods: {
     submit() {

@@ -27,7 +27,7 @@ export default {
 
 <style scoped>
 .cart {
-  margin: 7rem 0 2rem 7rem;
+  margin: 10rem 0 2rem 7rem;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
