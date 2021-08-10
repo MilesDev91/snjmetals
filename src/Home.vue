@@ -6,7 +6,7 @@
       <p>{{ item.name }}</p>
       <p>Price: ${{ item.price }}</p>
       <button @click="addToCart(item.name, item.imagePath, item.price)">
-        +Add to cart
+        <font-awesome-icon icon="plus" /> Add to cart
       </button>
     </div>
     <!-- End of categories -->
@@ -22,18 +22,9 @@ export default {
     };
   },
   mounted() {
-    this.$http
-      .get("items.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const resultArray = [];
-        for (let key in data) {
-          resultArray.push(data[key]);
-        }
-        this.items = resultArray;
-      });
+    this.$store.dispatch("getAllShopProducts").then(() => {
+      this.items = this.$store.getters.getProducts;
+    });
   },
   methods: {
     addToCart(x, y, z) {

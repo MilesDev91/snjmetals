@@ -5,23 +5,22 @@ import Footer from './components/shared/footer.vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import VueResource from 'vue-resource'
-import firebase from "firebase/app"
+import store from './vuex_store'
 
-//Setup firebase
-// For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
-const firebaseConfig = {
-  apiKey: "AIzaSyBjFSpUWiq9on8gbK8s5tXebT-HCQF6SzU",
-  authDomain: "jns-metals.firebaseapp.com",
-  databaseURL: "https://jns-metals-default-rtdb.firebaseio.com",
-  projectId: "jns-metals",
-  storageBucket: "jns-metals.appspot.com",
-  messagingSenderId: "609999149110",
-  appId: "1:609999149110:web:057b3297c575d60937e097",
-  measurementId: "G-CPMLV4FTVQ"
-};
+// Font awesome imports
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+//Specific icon imports
+import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons'
+
+// Add fa icons to library
+library.add(faEdit, faPlus)
+
+// Setup Font Awesome
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
 
 //Setup resources
 Vue.use(VueResource);
@@ -42,5 +41,6 @@ Vue.component('u-footer', Footer);
 new Vue({
   el: '#app',
   router,
-  render: h => h(App)
+  render: h => h(App),
+  store
 })

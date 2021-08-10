@@ -12,6 +12,7 @@
       @removeFromCart="removeFromCart($event)"
       @authenticated="setAuthenticated"
     ></router-view>
+    <button class="logout" v-if="authenticated">Logout</button>
     <u-footer></u-footer>
   </div>
 </template>
@@ -22,6 +23,7 @@ import firebase from "firebase";
 export default {
   data() {
     return {
+      // TODO: handle data in vuex store
       cart: [],
       cartCount: 0,
       total: 0,
@@ -30,8 +32,11 @@ export default {
   },
   // Check user status on update
   beforeUpdate() {
+    console.log(this.authenticated);
+    console.log(firebase.auth().currentUser);
     // Observes authentication change and changes status if no user
     firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
       if (user == null) {
         // Set authenticated to false
         this.setAuthenticated(false);
@@ -98,11 +103,15 @@ button {
   padding: 0.3rem;
   background-color: rgb(255, 181, 21);
   align-self: center;
-  margin: 0 0.4rem;
+  margin-bottom: 0.4rem;
 }
 
 button:focus {
   outline: none;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .body {
@@ -113,6 +122,12 @@ button:focus {
 
 .content {
   flex: 1;
+}
+
+.logout {
+  position: fixed;
+  bottom: 4rem;
+  left: 2rem;
 }
 
 h1,

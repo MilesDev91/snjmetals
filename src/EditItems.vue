@@ -1,27 +1,17 @@
 <template>
-  <div class="edititems">
-    <h1>Add, Edit, and Remove items here!</h1>
-    <div class="form-group">
-      <label>Name</label>
-      <br />
-      <input type="text" v-model="item.name" />
+  <div id="app">
+    <!-- TODO: This will be where all the Categories with images go -->
+    <div class="card" v-for="item in items" :key="item.id">
+      <img :src="item.imagePath" alt="" />
+      <button class="edit"><font-awesome-icon icon="edit" /> Edit</button>
+      <p>{{ item.name }}</p>
+      <p>Price: ${{ item.price }}</p>
+      <button><font-awesome-icon icon="plus" /> Add to cart</button>
     </div>
-    <div class="form-group">
-      <label>Size</label>
-      <br />
-      <input type="text" v-model="item.size" />
-    </div>
-    <div class="form-group">
-      <label>Price</label>
-      <br />
-      <input type="text" v-model="item.price" />
-    </div>
-    <div class="form-group">
-      <label>Image Path (leave this at default)</label>
-      <br />
-      <input type="text" v-model="item.imagePath" />
-    </div>
-    <button @click="submit">Submit</button>
+    <!-- End of categories -->
+
+    <!-- Add items button -->
+    <button class="add"><font-awesome-icon icon="plus" /> Add new item</button>
   </div>
 </template>
 
@@ -30,39 +20,98 @@ export default {
   props: ["authenticated"],
   data() {
     return {
-      item: {
-        name: "",
-        size: "20in by 20in",
-        price: "",
-        imagePath: "",
-      },
+      items: [],
     };
   },
   mounted() {
+    console.log(this.authenticated);
     if (!this.authenticated) {
       this.$router.replace({ path: "/login" });
     }
+    this.$http
+      .get("items.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const resultArray = [];
+        for (let key in data) {
+          resultArray.push(data[key]);
+        }
+        this.items = resultArray;
+      });
   },
-  methods: {
-    submit() {
-      this.$http.post("items.json", this.item);
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
-.edititems {
-  margin: 7rem 0 2rem 7rem;
-  border: 1px solid black;
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 10rem;
+  min-height: 100vh;
+  color: #2c3e50;
+  background-color: rgb(240, 240, 240);
   display: flex;
-  flex-direction: column;
-  background-color: white;
-  max-width: 40rem;
-  padding: 10px;
+  flex-wrap: wrap;
 }
 
-.form-group {
-  margin: 0.5rem;
+body {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+a {
+  color: #42b983;
+}
+
+img {
+  max-width: 100%;
+}
+
+.add {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+}
+
+.card {
+  max-height: 400px;
+  max-width: 400px;
+  box-shadow: 2px 2px 6px 0px rgb(88, 88, 88);
+  border: 1px solid black;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 10px;
+  background-color: white;
+  position: relative;
+}
+
+.card > p {
+  text-align: center;
+  padding: 0rem 0.6rem;
+  margin: 0.4rem;
+}
+
+.edit {
+  position: absolute;
+  bottom: 0;
+  right: 0.1rem;
 }
 </style>

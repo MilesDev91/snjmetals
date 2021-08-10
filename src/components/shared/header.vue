@@ -34,6 +34,7 @@ export default {
   padding: 60px 20px 1px 40px;
   border-bottom: 1px solid black;
   display: flex;
+  z-index: 2;
 }
 
 .logo {
