@@ -11,17 +11,27 @@
             item.quantity * item.price
           }}
         </p>
-        <button @click="$emit('removeFromCart', item.name)">Remove</button>
+        <button @click="removeItemFromCart(item.name)">Remove</button>
         <img :src="item.imagePath" alt="" />
       </div>
-      <h3>Total: ${{ total }}</h3>
+      <h3>Total: ${{ totalCost }}</h3>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
-  props: ["cart", "total"],
+  computed: {
+    ...mapState(["cart", "totalCost"]),
+  },
+  methods: {
+    ...mapMutations(["removeFromCart"]),
+    removeItemFromCart(name) {
+      this.removeFromCart(name);
+    },
+  },
 };
 </script>
 

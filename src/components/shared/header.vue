@@ -18,8 +18,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  props: ["cartCount"],
+  computed: {
+    ...mapState(["cartCount"]),
+  },
 };
 </script>
 

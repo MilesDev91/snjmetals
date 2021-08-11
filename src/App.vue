@@ -1,15 +1,10 @@
 <template>
   <div class="body">
-    <u-header :cartCount="cartCount"></u-header>
+    <u-header></u-header>
     <h1 v-if="authenticated">Admin mode</h1>
     <router-view
       class="content"
       :authenticated="authenticated"
-      :total="total"
-      :cart="cart"
-      :cartCount="cartCount"
-      @addCartObject="addToCart($event)"
-      @removeFromCart="removeFromCart($event)"
       @authenticated="setAuthenticated"
     ></router-view>
     <button class="logout" v-if="authenticated">Logout</button>
@@ -24,9 +19,6 @@ export default {
   data() {
     return {
       // TODO: handle data in vuex store
-      cart: [],
-      cartCount: 0,
-      total: 0,
       authenticated: false,
     };
   },
@@ -44,36 +36,6 @@ export default {
     });
   },
   methods: {
-    addToCart(cartObject) {
-      //These lines check for an already existing cart item of the same name
-      if (this.cart.length > 0) {
-        for (var i = 0; i < this.cart.length; i++) {
-          if (cartObject.name == this.cart[i].name) {
-            this.cart[i].quantity += 1;
-            this.cartCount += 1;
-            this.total += cartObject.price;
-            console.log(this.cart);
-            return;
-          }
-        }
-      }
-      this.cart.push(cartObject);
-      this.cartCount += 1;
-      this.total += cartObject.price;
-    },
-    removeFromCart(itemName) {
-      for (var i = 0; i < this.cart.length; i++) {
-        if (itemName == this.cart[i].name) {
-          this.cart[i].quantity -= 1;
-          this.cartCount -= 1;
-          this.total -= this.cart[i].price;
-          if (this.cart[i].quantity == 0) {
-            this.cart.splice(i, 1);
-          }
-          return;
-        }
-      }
-    },
     setAuthenticated(status) {
       this.authenticated = status;
     },

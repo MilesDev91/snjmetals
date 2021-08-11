@@ -5,7 +5,7 @@
       <img :src="item.imagePath" alt="" />
       <p>{{ item.name }}</p>
       <p>Price: ${{ item.price }}</p>
-      <button @click="addToCart(item.name, item.imagePath, item.price)">
+      <button @click="addItemToCart(item.name, item.imagePath, item.price)">
         <font-awesome-icon icon="plus" /> Add to cart
       </button>
     </div>
@@ -14,28 +14,31 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
-  props: ["cartCount"],
   data() {
     return {
       items: [],
     };
   },
+  computed: {
+    ...mapState(["products", "cartCount"]),
+  },
   mounted() {
-    this.$store.dispatch("getAllShopProducts").then(() => {
-      this.items = this.$store.getters.getProducts;
+    this.getAllShopProducts().then(() => {
+      this.items = this.products;
     });
   },
   methods: {
-    addToCart(x, y, z) {
-      var cartObject = {
-        id: this.cartCount,
-        name: x,
-        imagePath: y,
-        price: z,
+    ...mapActions(["getAllShopProducts", "addToCart"]),
+    addItemToCart(name, imagePath, price) {
+      var cartItem = {
+        name: name,
+        imagePath: imagePath,
+        price: price,
         quantity: 1,
       };
-      this.$emit("addCartObject", cartObject);
+      this.addToCart(cartItem);
     },
   },
 };
