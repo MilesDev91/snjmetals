@@ -24,7 +24,10 @@ import { mapState, mapMutations } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["cart", "totalCost"]),
+    ...mapState({
+      cart: (state) => state.cart.cart,
+      totalCost: (state) => state.cart.totalCost,
+    }),
   },
   methods: {
     ...mapMutations(["removeFromCart"]),

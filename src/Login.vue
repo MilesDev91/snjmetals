@@ -7,12 +7,13 @@
       v-model="input.password"
       placeholder="Password"
     />
-    <button type="button" v-on:click="login()">Login</button>
+    <button type="button" v-on:click="userLogin()">Login</button>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
+import { mapActions } from "vuex";
+
 export default {
   name: "Login",
   data() {
@@ -24,40 +25,11 @@ export default {
     };
   },
   methods: {
-    login() {
-      firebase
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {
-          // Existing and future Auth states are now persisted in the current
-          // session only. Closing the window would clear any existing state even
-          // if a user forgets to sign out.
-          // ...
-          // New sign-in will be persisted with session persistence.
-          return firebase
-            .auth()
-            .signInWithEmailAndPassword(this.input.email, this.input.password)
-            .then(() => {
-              // Signed in
-              console.log("Logged in");
-              this.$emit("authenticated", true);
-              this.$router.replace({ path: "/edititems" });
-            })
-            .catch((error) => {
-              // Handle errors
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              console.log("Error Code: " + errorCode);
-              console.log(errorMessage);
-            });
-        })
-        .catch((error) => {
-          // Handle errors
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log("Error code: " + errorCode);
-          console.log(errorMessage);
-        });
+    ...mapActions(["login"]),
+    userLogin() {
+      var email = this.input.email;
+      var password = this.input.password;
+      this.login({ email, password });
     },
   },
 };

@@ -21,7 +21,9 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["cartCount"]),
+    ...mapState({
+      cartCount: (state) => state.cart.cartCount,
+    }),
   },
 };
 </script>

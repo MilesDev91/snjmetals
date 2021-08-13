@@ -12,15 +12,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 //Specific icon imports
 import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons'
-
 // Add fa icons to library
 library.add(faEdit, faPlus)
-
 // Setup Font Awesome
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-// Initialize Firebase
-//firebase.initializeApp(firebaseConfig);
 
 //Setup resources
 Vue.use(VueResource);
@@ -28,7 +23,7 @@ Vue.use(VueRouter);
 
 Vue.http.options.root = 'https://jns-metals-default-rtdb.firebaseio.com/'
 
-const router = new VueRouter({
+export const router = new VueRouter({
   mode: 'history',
   routes: routes
 });

@@ -16,7 +16,7 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -75,4 +75,18 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     })
   ])
+}
+
+// This setting allows use of development NODE_ENV in the app
+if (process.env.NODE_ENV === 'development') {
+
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"',
+        ENDPOINT: '"http://localhost:8080"',
+        FOO: "'BAR'"
+      }
+    })
+  ]);
 }

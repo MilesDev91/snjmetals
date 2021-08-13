@@ -26,8 +26,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  props: ["authenticated"],
   data() {
     return {
       item: {
@@ -38,9 +39,16 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState({
+      authenticated: (state) => state.authenticated.authenticated,
+    }),
+  },
   mounted() {
-    if (!this.authenticated) {
-      this.$router.replace({ path: "/login" });
+    if (process.env.NODE_ENV === "production") {
+      if (!this.authenticated) {
+        this.$router.replace({ path: "/login" });
+      }
     }
   },
   methods: {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- TODO: This will be where all the Categories with images go -->
-    <div class="card" v-for="item in items" :key="item.id">
+    <div class="card" v-for="item in products" :key="item.id">
       <img :src="item.imagePath" alt="" />
       <button class="edit"><font-awesome-icon icon="edit" /> Edit</button>
       <p>{{ item.name }}</p>
@@ -16,32 +16,35 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
-  props: ["authenticated"],
   data() {
     return {
       items: [],
     };
   },
-  mounted() {
-    console.log(this.authenticated);
-    if (!this.authenticated) {
-      this.$router.replace({ path: "/login" });
-    }
-    this.$http
-      .get("items.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const resultArray = [];
-        for (let key in data) {
-          resultArray.push(data[key]);
-        }
-        this.items = resultArray;
-      });
+  computed: {
+    ...mapState({
+      products: (state) => state.products.products,
+      authenticated: (state) => state.authenticated.authenticated,
+    }),
   },
-  methods: {},
+  mounted() {
+    if (process.env.NODE_ENV === "production") {
+      if (!this.authenticated) {
+        this.$router.replace({ path: "/login" });
+        return;
+      }
+    }
+
+    this.getAllShopProducts().then(() => {
+      this.items = this.products;
+    });
+  },
+  methods: {
+    ...mapActions(["getAllShopProducts"]),
+  },
 };
 </script>
 

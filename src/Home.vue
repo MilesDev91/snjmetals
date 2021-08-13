@@ -22,7 +22,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["products", "cartCount"]),
+    ...mapState({
+      products: (state) => state.products.products,
+      cartCount: (state) => state.cart.cartCount,
+    }),
   },
   mounted() {
     this.getAllShopProducts().then(() => {

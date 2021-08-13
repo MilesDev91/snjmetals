@@ -1,12 +1,8 @@
 <template>
   <div class="body">
     <u-header></u-header>
-    <h1 v-if="authenticated">Admin mode</h1>
-    <router-view
-      class="content"
-      :authenticated="authenticated"
-      @authenticated="setAuthenticated"
-    ></router-view>
+    <h1 class="admin" v-if="authenticated">Admin mode</h1>
+    <router-view class="content"></router-view>
     <button class="logout" v-if="authenticated">Logout</button>
     <u-footer></u-footer>
   </div>
@@ -14,31 +10,37 @@
 
 <script>
 import firebase from "firebase";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   data() {
     return {
       // TODO: handle data in vuex store
-      authenticated: false,
+      //...mapState(["authenticated"]),
     };
+  },
+  computed: {
+    ...mapState({
+      authenticated: (state) => state.authentication.authenticated,
+    }),
   },
   // Check user status on update
   beforeUpdate() {
-    console.log(this.authenticated);
-    console.log(firebase.auth().currentUser);
+    if (process.env.NODE_ENV === "production") {
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log(user);
+        if (user == null) {
+          // Set authenticated to false
+          this.setAuthenticated(false);
+        }
+      });
+    }
+    //console.log(this.authenticated);
+    //console.log(firebase.auth().currentUser);
     // Observes authentication change and changes status if no user
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      if (user == null) {
-        // Set authenticated to false
-        this.setAuthenticated(false);
-      }
-    });
   },
   methods: {
-    setAuthenticated(status) {
-      this.authenticated = status;
-    },
+    ...mapMutations(["setAuthenticated"]),
   },
 };
 </script>
@@ -74,6 +76,14 @@ button:focus {
 
 button:hover {
   cursor: pointer;
+}
+
+.admin {
+  position: fixed;
+  top: 0;
+  right: 50vw;
+  z-index: 4;
+  color: darkred;
 }
 
 .body {
