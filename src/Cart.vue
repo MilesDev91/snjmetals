@@ -1,22 +1,31 @@
 <template>
-  <div class="cart">
-    <p style="padding: 1rem" v-if="cart.length == 0">
-      You have no items in your cart.
-    </p>
-    <div v-else>
-      <div class="cartItem" v-for="item in this.cart" :key="item.id">
-        <p>{{ item.name }}</p>
-        <p>
-          {{ item.quantity }} X ${{ item.price }} = ${{
-            item.quantity * item.price
-          }}
-        </p>
-        <button @click="removeItemFromCart(item.name)">Remove</button>
-        <img :src="item.imagePath" alt="" />
+  <b-container
+    class="d-flex w-50 bg-white border border-dark"
+    style="margin: 4rem auto"
+  >
+    <h3 v-if="cart.length == 0">You have no items in your cart.</h3>
+    <div class="w-100" v-else>
+      <h3 class="m-2">Total: ${{ totalCost }}</h3>
+      <div
+        class="d-flex my-4 justify-content-between mx-2"
+        v-for="item in this.cart"
+        :key="item.id"
+      >
+        <div>
+          <p>{{ item.name }}</p>
+          <p>
+            {{ item.quantity }} X ${{ item.price }} = ${{
+              item.quantity * item.price
+            }}
+          </p>
+          <b-button @click="removeItemFromCart(item.name)">Remove</b-button>
+        </div>
+        <div class="justify-content-end">
+          <b-img style="max-width: 20vw" :src="item.imagePath" alt="" />
+        </div>
       </div>
-      <h3>Total: ${{ totalCost }}</h3>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -39,7 +48,7 @@ export default {
 </script>
 
 <style scoped>
-.cart {
+/* .cart {
   margin: 10rem 0 2rem 7rem;
   border: 1px solid black;
   display: flex;
@@ -58,5 +67,5 @@ button {
 
 img {
   max-width: 100%;
-}
+} */
 </style>

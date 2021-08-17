@@ -1,20 +1,27 @@
 <template>
-  <div class="header">
-    <h2 class="logo">J&S Metal Works and Engravings</h2>
-    <ul>
-      <li><router-link to="/">Home</router-link></li>
-      <li class="disabled">
-        <!--<router-link to="/checkout"></router-link>-->Checkout
-      </li>
-      <li>
-        <router-link v-if="cartCount == 0" to="/cart">Cart</router-link>
-        <router-link v-else to="/cart"
+  <b-navbar
+    class="px-4 border-bottom border-dark"
+    toggleable="lg"
+    fixed="top"
+    type="light"
+    variant="info"
+  >
+    <b-navbar-brand href="/">J&S Metal Works and Engravings</b-navbar-brand>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav class="ms-auto">
+        <b-nav-item to="/">Home</b-nav-item>
+        <b-nav-item to="#" disabled>
+          <!--<router-link to="/checkout"></router-link>-->Checkout
+        </b-nav-item>
+
+        <b-nav-item v-if="cartCount == 0" to="/cart">Cart</b-nav-item>
+        <b-nav-item v-else to="/cart"
           >Cart
-          <span style="font-weight: bold">({{ cartCount }})</span></router-link
+          <span style="font-weight: bold">({{ cartCount }})</span></b-nav-item
         >
-      </li>
-    </ul>
-  </div>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
@@ -29,7 +36,7 @@ export default {
 </script>
 
 <style scoped>
-.header {
+/* .header {
   position: fixed;
   top: 0;
   left: 0;
@@ -47,10 +54,6 @@ export default {
   cursor: pointer;
 }
 
-.disabled {
-  color: gray;
-}
-
 ul {
   align-self: center;
   margin-left: auto;
@@ -65,5 +68,5 @@ a {
 
 li {
   font-size: 20px;
-}
+} */
 </style>

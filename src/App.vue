@@ -3,7 +3,13 @@
     <u-header></u-header>
     <h1 class="admin" v-if="authenticated">Admin mode</h1>
     <router-view class="content"></router-view>
-    <button class="logout" v-if="authenticated">Logout</button>
+    <b-button
+      variant="info"
+      class="logout"
+      v-if="authenticated"
+      @click="logout()"
+      >Logout</b-button
+    >
     <u-footer></u-footer>
   </div>
 </template>
@@ -29,7 +35,9 @@ export default {
     if (process.env.NODE_ENV === "production") {
       firebase.auth().onAuthStateChanged((user) => {
         console.log(user);
-        if (user == null) {
+        if (user) {
+          this.setAuthenticated(true);
+        } else {
           // Set authenticated to false
           this.setAuthenticated(false);
         }
@@ -41,6 +49,10 @@ export default {
   },
   methods: {
     ...mapMutations(["setAuthenticated"]),
+    logout() {
+      this.setAuthenticated(false);
+      this.$router.push("/");
+    },
   },
 };
 </script>
@@ -53,7 +65,7 @@ export default {
   padding-top: 99px;
   min-height: 100vh;
   color: #2c3e50;
-  display: flex;
+  /*display: flex;*/
 }
 
 body {
@@ -119,5 +131,43 @@ li {
 
 a {
   color: #42b983;
+}
+
+/* Bootstrap vue styling isn't working right */
+.form-group {
+  margin-bottom: 1rem;
+}
+.custom-file-label,
+.custom-file-label:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1.5;
+  padding: 0.25rem 0.5rem;
+}
+.custom-file-label:after {
+  bottom: 0;
+  z-index: 3;
+  display: block;
+  content: "Browse";
+  background-color: lightskyblue;
+  border-left: inherit;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+.custom-file-label {
+  left: 0;
+  z-index: 1;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: white;
+}
+.custom-file,
+.custom-file-input {
+  position: relative;
+  width: 100%;
+}
+.custom-file-input {
+  margin: 0;
+  opacity: 0;
 }
 </style>

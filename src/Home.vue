@@ -1,14 +1,22 @@
 <template>
-  <div id="app">
+  <div class="justify-content-around d-flex flex-wrap flex-sm-row" id="app">
     <!-- This will be where all the Categories with images go -->
-    <div class="card" v-for="item in items" :key="item.id">
-      <img :src="item.imagePath" alt="" />
-      <p>{{ item.name }}</p>
-      <p>Price: ${{ item.price }}</p>
-      <button @click="addItemToCart(item.name, item.imagePath, item.price)">
+    <b-card
+      :img-src="item.imagePath"
+      :title="item.name"
+      v-for="item in items"
+      :key="item.id"
+      class="my-2"
+      style="max-width: 20vw"
+    >
+      <b-card-text> Price: ${{ item.price }} </b-card-text>
+      <b-button
+        variant="secondary"
+        @click="addItemToCart(item.name, item.imagePath, item.price)"
+      >
         <font-awesome-icon icon="plus" /> Add to cart
-      </button>
-    </div>
+      </b-button>
+    </b-card>
     <!-- End of categories -->
   </div>
 </template>
@@ -27,7 +35,7 @@ export default {
       cartCount: (state) => state.cart.cartCount,
     }),
   },
-  mounted() {
+  created() {
     this.getAllShopProducts().then(() => {
       this.items = this.products;
     });
@@ -48,7 +56,7 @@ export default {
 </script>
 
 <style scoped>
-#app {
+/* #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: 10rem;
@@ -102,5 +110,5 @@ a {
 
 img {
   max-width: 100%;
-}
+} */
 </style>

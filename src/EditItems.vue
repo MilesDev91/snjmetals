@@ -1,17 +1,32 @@
 <template>
-  <div id="app">
+  <div class="justify-content-around d-flex flex-wrap flex-sm-row" id="app">
     <!-- TODO: This will be where all the Categories with images go -->
-    <div class="card" v-for="item in products" :key="item.id">
-      <img :src="item.imagePath" alt="" />
-      <button class="edit"><font-awesome-icon icon="edit" /> Edit</button>
-      <p>{{ item.name }}</p>
-      <p>Price: ${{ item.price }}</p>
-      <button><font-awesome-icon icon="plus" /> Add to cart</button>
-    </div>
+    <b-card
+      :img-src="item.imagePath"
+      :title="item.name"
+      v-for="item in products"
+      :key="item.id"
+      class="my-2"
+      style="max-width: 20vw"
+    >
+      <b-button class="edit" @click="editItem(item.name)"
+        ><font-awesome-icon icon="edit" /> Edit</b-button
+      >
+      <b-button class="delete"
+        ><font-awesome-icon icon="trash-alt"></font-awesome-icon>
+        Delete</b-button
+      >
+      <b-card-text>Price: ${{ item.price }}</b-card-text>
+      <b-button class="add-to-cart"
+        ><font-awesome-icon icon="plus" /> Add to cart</b-button
+      >
+    </b-card>
     <!-- End of categories -->
 
     <!-- Add items button -->
-    <button class="add"><font-awesome-icon icon="plus" /> Add new item</button>
+    <b-button class="add" @click="addItem()"
+      ><font-awesome-icon icon="plus" /> Add new item</b-button
+    >
   </div>
 </template>
 
@@ -27,29 +42,55 @@ export default {
   computed: {
     ...mapState({
       products: (state) => state.products.products,
-      authenticated: (state) => state.authenticated.authenticated,
+      authenticated: (state) => state.authentication.authenticated,
     }),
   },
-  mounted() {
-    if (process.env.NODE_ENV === "production") {
-      if (!this.authenticated) {
-        this.$router.replace({ path: "/login" });
-        return;
-      }
+  created() {
+    //if (process.env.NODE_ENV === "production") {
+    if (!this.authenticated) {
+      this.$router.replace({ path: "/login" });
+      return;
     }
+    //}
 
     this.getAllShopProducts().then(() => {
       this.items = this.products;
     });
   },
   methods: {
-    ...mapActions(["getAllShopProducts"]),
+    ...mapActions(["getAllShopProducts", "setCurrentEditItem"]),
+    editItem(name) {
+      this.setCurrentEditItem(name).then(() => {
+        this.$router.push(`/edititem/${name}`);
+      });
+    },
+    addItem() {
+      this.$router.push("/additem");
+    },
   },
 };
 </script>
 
 <style scoped>
-#app {
+.add {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 5;
+}
+
+.delete {
+  position: absolute;
+  bottom: 4rem;
+  right: 1rem;
+}
+
+.edit {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+/* #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: 10rem;
@@ -87,11 +128,7 @@ img {
   max-width: 100%;
 }
 
-.add {
-  position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-}
+
 
 .card {
   max-height: 400px;
@@ -111,10 +148,5 @@ img {
   padding: 0rem 0.6rem;
   margin: 0.4rem;
 }
-
-.edit {
-  position: absolute;
-  bottom: 0;
-  right: 0.1rem;
-}
+ */
 </style>
