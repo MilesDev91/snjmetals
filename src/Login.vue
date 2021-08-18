@@ -25,7 +25,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions(["login", "getS3Config"]),
     userLogin() {
       var email = this.input.email;
       var password = this.input.password;

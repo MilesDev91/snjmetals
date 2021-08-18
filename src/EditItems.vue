@@ -12,7 +12,10 @@
       <b-button class="edit" @click="editItem(item.name)"
         ><font-awesome-icon icon="edit" /> Edit</b-button
       >
-      <b-button class="delete"
+      <b-button
+        class="delete"
+        @click="setDeleteItemName(item.name)"
+        v-b-modal.modal-delete
         ><font-awesome-icon icon="trash-alt"></font-awesome-icon>
         Delete</b-button
       >
@@ -27,6 +30,24 @@
     <b-button class="add" @click="addItem()"
       ><font-awesome-icon icon="plus" /> Add new item</b-button
     >
+
+    <!-- Delete Modal Form -->
+    <b-modal @hide="deleteError = null" id="modal-delete" title="Delete Item?">
+      <b-alert :show="deleteError != null">{{ deleteError }}</b-alert>
+      Are you sure you wish to delete {{ deleteItemName }}?
+      <b-form @submit.prevent="deleteItem">
+        <b-form-group
+          description="Please enter item name and press delete to confirm"
+        >
+          <b-form-input
+            v-model="matchName"
+            :placeholder="deleteItemName"
+            :label="deleteItemName"
+          ></b-form-input>
+        </b-form-group>
+        <b-button variant="danger" type="submit">Delete</b-button>
+      </b-form>
+    </b-modal>
   </div>
 </template>
 
@@ -37,28 +58,38 @@ export default {
   data() {
     return {
       items: [],
+      deleteItemName: "",
+      matchName: "",
+      deleteError: null,
     };
   },
   computed: {
     ...mapState({
       products: (state) => state.products.products,
       authenticated: (state) => state.authentication.authenticated,
+      s3Config: (state) => state.authentication.s3Config,
     }),
   },
   created() {
-    //if (process.env.NODE_ENV === "production") {
-    if (!this.authenticated) {
-      this.$router.replace({ path: "/login" });
-      return;
+    if (process.env.NODE_ENV === "production") {
+      if (!this.authenticated) {
+        this.$router.replace({ path: "/login" });
+        return;
+      }
     }
-    //}
+    this.getS3Config();
 
     this.getAllShopProducts().then(() => {
       this.items = this.products;
     });
   },
   methods: {
-    ...mapActions(["getAllShopProducts", "setCurrentEditItem"]),
+    ...mapActions([
+      "getAllShopProducts",
+      "setCurrentEditItem",
+      "getS3Config",
+      "deleteItemFromDatabase",
+    ]),
     editItem(name) {
       this.setCurrentEditItem(name).then(() => {
         this.$router.push(`/edititem/${name}`);
@@ -66,6 +97,18 @@ export default {
     },
     addItem() {
       this.$router.push("/additem");
+    },
+    setDeleteItemName(name) {
+      this.deleteItemName = name;
+    },
+    deleteItem() {
+      // Check for match confirmation
+      if (this.matchName != this.deleteItemName) {
+        this.deleteError = "Name does not match.";
+        return;
+      }
+      // Proceed to delete item from firebase database
+      this.deleteItemFromDatabase(this.deleteItemName);
     },
   },
 };

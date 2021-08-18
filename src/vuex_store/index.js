@@ -6,7 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 // Import and initialize Firebase
 import firebase from 'firebase'
-import firebaseConfig from '../../config/firebase_config'
+import firebaseConfig from '../config/firebase_config'
 firebase.initializeApp(firebaseConfig);
 
 // Export database reference

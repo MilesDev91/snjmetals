@@ -21,7 +21,18 @@ const mutations = {
   // Populates current item with properties sent by action
   setCurrentEditItem (state, item) {
     state.currentItem = item
-    console.log("setCurrentEditItem mutation set ", item)
+  },
+  // Adds new item to product list
+  addNewItemToProducts (state, item) {
+    console.log(item)
+  },
+  // Removes item from product list
+  deleteItemFromProducts (state, item) {
+    console.log(item)
+  },
+  // Updates products
+  updateProducts (state, item) {
+    console.log(item)
   }
 }
 
@@ -60,7 +71,29 @@ const actions = {
           resolve()
         })
     })
+  },
+  // Adds new item to database
+  addNewItemToDatabase ({ commit }, item) {
+    itemsDatabase.child(item.name).set({
+      ...item
+    })
+    commit("addNewItemToProducts", item)
+  },
+  // Deletes item from database, expects a name
+  deleteItemFromDatabase ({ commit }, itemName) {
+    itemsDatabase.child(itemName).remove()
+    commit("deleteItemFromProducts", itemName)
+  },
+  // Receives an object with an item and original name to reference
+  // TODO: see if we can update id as well as item
+  updateItemInDatabase ({ commit }, { item, originalName }) {
+    console.log(item, originalName)
+    itemsDatabase.child(originalName).update({
+      ...item
+    })
+    commit("updateProducts", item)
   }
+
 }
 
 

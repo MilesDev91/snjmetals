@@ -3,6 +3,7 @@ import { router } from '../../main'
 
 const state = () => ({
   authenticated: false,
+  s3Config: {}
 })
 
 const getters = {
@@ -13,6 +14,11 @@ const mutations = {
   setAuthenticated (state, authenticated) {
     state.authenticated = authenticated
   },
+  setS3Config (state, config) {
+    state.s3Config = {
+      ...config
+    }
+  }
 }
 
 const actions = {
@@ -49,6 +55,12 @@ const actions = {
         console.log("Error code: " + errorCode);
         console.log(errorMessage);
       });
+  },
+  getS3Config ({ commit }) {
+    firebase.database().ref("settings").child("s3").get().then((snapshot) => {
+      var settings = snapshot.toJSON()
+      commit("setS3Config", settings)
+    })
   }
 }
 

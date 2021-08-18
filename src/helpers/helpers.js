@@ -18,14 +18,15 @@ export function checkDuplicate (item, itemGroup) {
   return false;
 }
 // This functions calls two promises that check our firebase database for a copy of the image path and name. This is to avoid overwriting images in our s3 bucket AND enforce unique names in our firebase database. If either promise rejects, this promise will also reject, which states that a duplicate was found.
-export function checkDuplicateInDatabase (itemName, fileName) {
+// originalItem is optional and used for editing
+export function checkDuplicateInDatabase (itemName, fileName, originalItem = null) {
   return Promise.all([
-    checkDuplicateNameInDatabase(itemName),
-    checkDuplicateImagePathInDatabase(fileName)
+    checkDuplicateNameInDatabase(itemName, originalItem),
+    checkDuplicateImagePathInDatabase(fileName, originalItem)
   ])
 }
 // This function receives the item name and checks for it in the firebase database. Names must be unique for a multitude of reasons. Resolves true if it finds one and false if it doesn't.
-export function checkDuplicateNameInDatabase (itemName) {
+export function checkDuplicateNameInDatabase (itemName, originalItem = null) {
   return new Promise((resolve) => {
     // Returns snapshot of item name
     itemsDatabase.orderByChild('name').equalTo(itemName).once('value')
@@ -35,18 +36,27 @@ export function checkDuplicateNameInDatabase (itemName) {
         for (var key in item) {
           var dupeItemName = item[key].name
         }
-        // Checks item against one found in the database, which should be null or empty if it isn't a match.
-        if (itemName == dupeItemName) {
-          resolve(true)
+        // Checks for original item to see if it is edit comparison.
+        if (originalItem != null) {
+          if (itemName == dupeItemName && itemName != originalItem.name) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         } else {
-          resolve(false)
+          // Reaching here means it is a regular comparison
+          if (itemName == dupeItemName) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         }
       })
       .catch((error) => { console.log(error) })
   })
 }
 // This function receives a file name, appends it to a base URL, then searches the firebase database for a copy. This is to avoid overwriting images in the S3 database, as it might lead to other items referencing the wrong image. Resolves true if it finds one and false if it doesn't.
-export function checkDuplicateImagePathInDatabase (fileName) {
+export function checkDuplicateImagePathInDatabase (fileName, originalItem) {
   var imagePath = s3ImagesUrl + "/" + fileName
   return new Promise((resolve) => {
     // Returns snapshot or null
@@ -57,11 +67,20 @@ export function checkDuplicateImagePathInDatabase (fileName) {
         for (var key in item) {
           var dupeItemPath = item[key].imagePath
         }
-        // Checks image path against one found in database, which should be null or empty if it isn't a match.
-        if (imagePath == dupeItemPath) {
-          resolve(true)
+        // Checks to see if it is an edit comparison
+        if (originalItem != null) {
+          if (imagePath == dupeItemPath && imagePath != originalItem.imagePath) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         } else {
-          resolve(false)
+          // Regular comparison
+          if (imagePath == dupeItemPath) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         }
       })
       .catch((error) => {

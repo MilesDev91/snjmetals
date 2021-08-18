@@ -73,8 +73,8 @@
 import { checkDuplicateInDatabase, validatePrice } from "./helpers/helpers";
 import { mapState, mapActions } from "vuex";
 
-// import AWS S3 instance
-import { S3Client } from "./main";
+// import AWS S3
+import S3 from "aws-s3-pro";
 
 export default {
   data() {
@@ -88,23 +88,27 @@ export default {
       },
       // Errors go in order for each input item
       errors: [],
+      s3Client: null,
     };
   },
   computed: {
     ...mapState({
       authenticated: (state) => state.authentication.authenticated,
+      s3Config: (state) => state.authentication.s3Config,
     }),
   },
   created() {
-    //if (process.env.NODE_ENV === "production") {
-    if (!this.authenticated) {
-      this.$router.replace({ path: "/login" });
+    if (process.env.NODE_ENV === "production") {
+      if (!this.authenticated) {
+        this.$router.replace({ path: "/login" });
+      }
     }
-    //}
+    // Initialize s3 Client
+    this.s3Client = new S3(this.s3Config);
     this.reset();
   },
   methods: {
-    ...mapActions(["getAllShopProducts"]),
+    ...mapActions(["getAllShopProducts", "addNewItemToDatabase"]),
 
     async submit() {
       // Clear errors if any
@@ -124,7 +128,7 @@ export default {
           imagePath: this.item.imagePath,
           price: this.item.price,
         };
-        this.$http.post("items.json", postItem);
+        this.addNewItemToDatabase(postItem);
         this.getAllShopProducts();
         this.$router.push("/edititems");
       });
@@ -136,7 +140,8 @@ export default {
         var fileName =
           file.name.substr(0, file.name.lastIndexOf(".")) || file.name;
 
-        S3Client.uploadFile(file, fileName)
+        this.s3Client
+          .uploadFile(file, fileName)
           .then((data) => {
             this.item.imagePath = data.location;
             resolve();

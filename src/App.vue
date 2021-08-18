@@ -74,14 +74,6 @@ body {
   background-color: rgb(240, 240, 240);
 }
 
-button {
-  border-radius: 0.6rem;
-  padding: 0.3rem;
-  background-color: rgb(255, 181, 21);
-  align-self: center;
-  margin-bottom: 0.4rem;
-}
-
 button:focus {
   outline: none;
 }

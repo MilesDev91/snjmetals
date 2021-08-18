@@ -34,13 +34,7 @@ library.add(faEdit, faPlus, faArrowLeft, faTrashAlt)
 // Setup Font Awesome
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-// AWS-S3 setup
-import S3 from 'aws-s3-pro'
-import { uploadConfig } from '../config/s3bucket_config'
-export const S3Client = new S3(uploadConfig);
-
 //Setup resources
-Vue.use(S3Client);
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
