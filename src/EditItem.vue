@@ -2,7 +2,9 @@
   <div class="mw-40 mx-auto" style="margin-top: 4rem" v-if="item.name != null">
     <h1>Edit here!</h1>
     <div v-for="(error, index) in errors" :key="index">
-      <b-alert :show="errors[index] != null">{{ errors[index] }}</b-alert>
+      <b-alert dismissible :show="errors[index] != null">{{
+        errors[index]
+      }}</b-alert>
     </div>
     <b-form @submit.prevent="submit">
       <b-form-group

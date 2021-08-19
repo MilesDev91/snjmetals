@@ -1,5 +1,12 @@
 <template>
   <div class="justify-content-around d-flex flex-wrap flex-sm-row" id="app">
+    <b-alert
+      class="v-alert"
+      variant="success"
+      :show="verification != null"
+      dismissible
+      >{{ verification }}</b-alert
+    >
     <!-- TODO: This will be where all the Categories with images go -->
     <b-card
       :img-src="item.imagePath"
@@ -33,7 +40,12 @@
 
     <!-- Delete Modal Form -->
     <b-modal @hide="deleteError = null" id="modal-delete" title="Delete Item?">
-      <b-alert :show="deleteError != null">{{ deleteError }}</b-alert>
+      <b-alert variant="success" dismissible :show="verification != null">{{
+        verification
+      }}</b-alert>
+      <b-alert dismissible :show="deleteError != null">{{
+        deleteError
+      }}</b-alert>
       Are you sure you wish to delete {{ deleteItemName }}?
       <b-form @submit.prevent="deleteItem">
         <b-form-group
@@ -61,6 +73,7 @@ export default {
       deleteItemName: "",
       matchName: "",
       deleteError: null,
+      verification: null,
     };
   },
   computed: {
@@ -109,6 +122,8 @@ export default {
       }
       // Proceed to delete item from firebase database
       this.deleteItemFromDatabase(this.deleteItemName);
+
+      this.verification = "Delete successful!";
     },
   },
 };
@@ -132,6 +147,13 @@ export default {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
+}
+
+.v-alert {
+  position: fixed;
+  top: 4rem;
+  left: auto;
+  z-index: 2020;
 }
 /* #app {
   -webkit-font-smoothing: antialiased;

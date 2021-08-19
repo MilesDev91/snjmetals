@@ -2,7 +2,9 @@
   <div class="mw-40 mx-auto" style="margin-top: 4rem">
     <h1>Add items here!</h1>
     <div v-for="(error, index) in errors" :key="index">
-      <b-alert :show="errors[index] != null">{{ errors[index] }}</b-alert>
+      <b-alert dismissible :show="errors[index] != null">{{
+        errors[index]
+      }}</b-alert>
     </div>
     <b-form @submit.prevent="submit" @reset="formReset">
       <b-form-group

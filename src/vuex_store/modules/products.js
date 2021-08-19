@@ -29,6 +29,7 @@ const mutations = {
   // Removes item from product list
   deleteItemFromProducts (state, item) {
     console.log(item)
+    state.products = state.products.filter(product => product != item)
   },
   // Updates products
   updateProducts (state, item) {

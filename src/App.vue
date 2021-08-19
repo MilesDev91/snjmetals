@@ -86,8 +86,8 @@ button:hover {
   position: fixed;
   top: 0;
   right: 50vw;
-  z-index: 4;
-  color: darkred;
+  z-index: 2000;
+  color: rgb(70, 121, 168);
 }
 
 .body {
@@ -126,6 +126,21 @@ a {
 }
 
 /* Bootstrap vue styling isn't working right */
+
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.9rem 1.25rem;
+  color: inherit;
+  z-index: 2;
+}
+
+button.close {
+  background-color: transparent;
+  border: 0;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
