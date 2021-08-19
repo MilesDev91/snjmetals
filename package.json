@@ -15,8 +15,6 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@popperjs/core": "^2.9.3",
     "@vue/composition-api": "^1.1.1",
-    "@vuelidate/core": "^2.0.0-alpha.24",
-    "@vuelidate/validators": "^2.0.0-alpha.21",
     "acorn": "^8.4.1",
     "aws-s3-pro": "^1.0.4",
     "babel-polyfill": "^6.26.0",
