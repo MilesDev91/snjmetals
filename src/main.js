@@ -18,12 +18,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
-// Vuelidate composition API setup
-import Vuelidate from '@vuelidate/core'
-import VueCompositionAPI from '@vue/composition-api'
-Vue.use(VueCompositionAPI)
-Vue.use(Vuelidate)
-
 // Font awesome imports
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
