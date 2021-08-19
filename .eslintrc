@@ -7,7 +7,9 @@
     "plugin:vue/essential",
     "eslint:recommended"
   ],
-  "rules": {},
+  "rules": {
+    "vue/script-setup-uses-vars": "off"
+  },
   "parserOptions": {
     "parser": "babel-eslint"
   }
