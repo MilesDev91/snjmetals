@@ -20,8 +20,18 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^5.1.0",
     "bootstrap-vue": "^2.21.2",
+    "color": "^4.0.1",
+    "dns-packet": "^5.3.0",
     "firebase": "^8.7.1",
+    "glob-parent": "^6.0.1",
+    "hosted-git-info": "^4.0.2",
+    "is-svg": "^4.3.1",
     "jquery": "^3.6.0",
+    "lodash": "^4.17.21",
+    "path-parse": "^1.0.7",
+    "sockjs": "^0.3.21",
+    "trim-newlines": "^4.0.2",
+    "url-parse": "^1.5.3",
     "vue": "^2.5.11",
     "vue-resource": "^1.5.2",
     "vue-router": "^3.4.9",
@@ -47,6 +57,6 @@
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^2.11.5"
   }
 }
