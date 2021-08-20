@@ -1,0 +1,121 @@
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 6rem;
+  min-height: 100vh;
+  color: #2c3e50;
+  /*display: flex;*/
+}
+
+body {
+  margin: 0;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  background-color: rgb(236 247 251);
+}
+
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.admin {
+  position: fixed;
+  top: 0;
+  right: 50vw;
+  z-index: 2000;
+  color: rgb(70, 121, 168);
+}
+
+.body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
+
+.logout {
+  position: fixed;
+  bottom: 4rem;
+  left: 2rem;
+}
+
+h1,
+h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+/* Bootstrap vue styling isn't working right */
+.alert {
+  z-index: 1040;
+}
+
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.9rem 1.25rem;
+  color: inherit;
+  z-index: 2;
+}
+
+button.close {
+  background-color: transparent;
+  border: 0;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+.custom-file-label,
+.custom-file-label:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1.5;
+  padding: 0.25rem 0.5rem;
+}
+.custom-file-label:after {
+  bottom: 0;
+  z-index: 3;
+  display: block;
+  content: "Browse";
+  background-color: lightskyblue;
+  border-left: inherit;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+.custom-file-label {
+  left: 0;
+  z-index: 1;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: white;
+}
+.custom-file,
+.custom-file-input {
+  position: relative;
+  width: 100%;
+}
+.custom-file-input {
+  margin: 0;
+  opacity: 0;
+}

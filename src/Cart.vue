@@ -24,6 +24,7 @@
           <b-img style="max-width: 20vw" :src="item.imagePath" alt="" />
         </div>
       </div>
+      <b-button class="my-2" @click="resetCart">Remove all items</b-button>
     </div>
   </b-container>
 </template>
@@ -39,9 +40,12 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations(["removeFromCart"]),
+    ...mapMutations(["removeFromCart", "removeAllFromCart"]),
     removeItemFromCart(name) {
       this.removeFromCart(name);
+    },
+    resetCart() {
+      this.removeAllFromCart();
     },
   },
 };

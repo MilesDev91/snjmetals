@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Header from './components/shared/header.vue'
-import Footer from './components/shared/footer.vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import VueResource from 'vue-resource'
@@ -39,7 +37,14 @@ export const router = new VueRouter({
   routes: routes
 });
 
+//Components
+import Header from './components/shared/header.vue'
+import Footer from './components/shared/footer.vue'
+import ItemCard from './components/ItemCard.vue'
+import ItemSection from './components/ItemSection.vue'
 //Beginning of component registration
+Vue.component('u-item-section', ItemSection)
+Vue.component('u-item-card', ItemCard)
 Vue.component('u-header', Header);
 Vue.component('u-footer', Footer);
 //End component registration

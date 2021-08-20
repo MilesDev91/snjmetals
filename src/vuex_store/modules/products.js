@@ -41,37 +41,31 @@ const actions = {
   // Used to get all products from database through api and set the state
   getAllShopProducts ({ commit }) {
     return new Promise((resolve) => {
-      itemsDatabase.get()
-        .then((response) => {
-          return response.toJSON();
-        }).then((data) => {
-          const resultArray = [];
-          for (let key in data) {
-            resultArray.push(data[key]);
-          }
-          return resultArray;
-
-        }).then((data) => {
-          commit('setProducts', data)
-          resolve()
-        })
+      itemsDatabase.on('value', (snapshot) => {
+        var data = snapshot.toJSON();
+        // Copy item information over from the JSON snapshot into a new array, which will become the products array.
+        const resultArray = [];
+        for (let key in data) {
+          resultArray.push(data[key]);
+        }
+        commit('setProducts', resultArray)
+        resolve()
+      })
     })
   },
   // Gets a specific item from the store and makes it the current edited item. Returns a promise for router
-  setCurrentEditItem ({ commit }, name) {
-    return new Promise((resolve) => {
-      itemsDatabase.orderByChild('name').equalTo(name).once("value")
-        .then((snapshot) => {
-          var tempObject = JSON.parse(JSON.stringify(snapshot.toJSON()))
-          for (var key in tempObject) {
-            var itemObject = {
-              ...tempObject[key],
-            }
+  async setCurrentItem ({ commit }, name) {
+    itemsDatabase.orderByChild('name').equalTo(name).once("value")
+      .then((snapshot) => {
+        var tempObject = JSON.parse(JSON.stringify(snapshot.toJSON()))
+        for (var key in tempObject) {
+          var itemObject = {
+            ...tempObject[key],
           }
-          commit('setCurrentEditItem', itemObject)
-          resolve()
-        })
-    })
+        }
+        commit('setCurrentEditItem', itemObject)
+      })
+
   },
   // Adds new item to database
   addNewItemToDatabase ({ commit }, item) {
@@ -93,7 +87,16 @@ const actions = {
       ...item
     })
     commit("updateProducts", item)
-  }
+  },
+  // Use this function to add values to multiple objects at once. Used primarily because this is the best way I have found to save time.
+
+  // updateDatabase ({ state }) {
+  //   var updates = {};
+  //   for (let i in state.products) {
+  //     updates[state.products[i].name + "/description"] = "It's a neat sign."
+  //   }
+  //   itemsDatabase.update(updates)
+  //}
 
 }
 

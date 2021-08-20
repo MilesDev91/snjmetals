@@ -37,6 +37,11 @@ const mutations = {
     }
     state.cartCount -= 1
     state.totalCost -= parseInt(item.price)
+  },
+  // Reset the cart
+  removeAllFromCart (state) {
+    state.cart = []
+    state.cartCount = 0
   }
 }
 
