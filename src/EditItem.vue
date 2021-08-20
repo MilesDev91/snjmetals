@@ -159,7 +159,6 @@ export default {
         //   item: this.item,
         //   originalName: this.originalItem.name,
         // });
-        this.getAllShopProducts();
         this.$router.push("/edititems");
       }
     },
