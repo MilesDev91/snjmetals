@@ -5,6 +5,7 @@
       :name="item.name"
       :price="item.price"
       :size="item.size"
+      :description="item.description"
     ></u-item-section>
   </div>
 </template>
@@ -18,7 +19,6 @@ export default {
   },
   created() {
     this.setItem(this.$route.params.name);
-    console.log(this.$route.params.name);
   },
   methods: {
     ...mapActions(["setCurrentItem"]),

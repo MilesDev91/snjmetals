@@ -99,12 +99,12 @@ export default {
   methods: {
     ...mapActions([
       "getAllShopProducts",
-      "setCurrentEditItem",
+      "setCurrentItem",
       "getS3Config",
       "deleteItemFromDatabase",
     ]),
     async editItem(name) {
-      await this.setCurrentEditItem(name);
+      await this.setCurrentItem(name);
       this.$router.push(`/edititem/${name}`);
     },
     addItem() {

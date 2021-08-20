@@ -65,6 +65,9 @@ a {
 }
 
 /* Bootstrap vue styling isn't working right */
+.alert {
+  z-index: 1040;
+}
 
 .alert-dismissible .close {
   position: absolute;

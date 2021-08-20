@@ -5,7 +5,11 @@
     </router-link>
     <b-card-body>
       <b-card-title>{{ itemName }}</b-card-title>
-      <b-card-text>Price: ${{ price }}</b-card-text>
+      <b-card-text>
+        Price: ${{ price }}
+        <br />
+        Size: {{ size }}
+      </b-card-text>
       <b-button
         @click="addItemToCart(itemName, imagePath, price)"
         variant="secondary"
@@ -39,6 +43,8 @@ export default {
         price: price,
         quantity: 1,
       };
+      // Tell parent item was added
+      this.$emit("verifyAdded");
       this.addToCart(cartItem);
     },
   },

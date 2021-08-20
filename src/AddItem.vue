@@ -110,7 +110,7 @@ export default {
     this.reset();
   },
   methods: {
-    ...mapActions(["getAllShopProducts", "addNewItemToDatabase"]),
+    ...mapActions(["addNewItemToDatabase"]),
 
     async submit() {
       // Clear errors if any
@@ -131,7 +131,6 @@ export default {
           price: this.item.price,
         };
         this.addNewItemToDatabase(postItem);
-        this.getAllShopProducts();
         this.$router.push("/edititems");
       });
     },
