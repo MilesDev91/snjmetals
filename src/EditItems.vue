@@ -103,10 +103,9 @@ export default {
       "getS3Config",
       "deleteItemFromDatabase",
     ]),
-    editItem(name) {
-      this.setCurrentEditItem(name).then(() => {
-        this.$router.push(`/edititem/${name}`);
-      });
+    async editItem(name) {
+      await this.setCurrentEditItem(name);
+      this.$router.push(`/edititem/${name}`);
     },
     addItem() {
       this.$router.push("/additem");

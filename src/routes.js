@@ -5,6 +5,7 @@ import EditItems from './EditItems.vue'
 import Login from './Login.vue'
 import AddItem from './AddItem.vue'
 import EditItem from './EditItem.vue'
+import ViewItem from './ViewItem.vue'
 
 export const routes = [
   { path: '', component: Home },
@@ -13,6 +14,7 @@ export const routes = [
   { path: '/edititems', component: EditItems },
   { path: '/additem', component: AddItem },
   { path: '/edititem/:name', component: EditItem },
+  { name: 'viewitem', path: '/viewitem/:name', component: ViewItem },
   { path: '/login', component: Login },
 
   //Catch-all route

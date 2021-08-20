@@ -58,20 +58,18 @@ const actions = {
     })
   },
   // Gets a specific item from the store and makes it the current edited item. Returns a promise for router
-  setCurrentEditItem ({ commit }, name) {
-    return new Promise((resolve) => {
-      itemsDatabase.orderByChild('name').equalTo(name).once("value")
-        .then((snapshot) => {
-          var tempObject = JSON.parse(JSON.stringify(snapshot.toJSON()))
-          for (var key in tempObject) {
-            var itemObject = {
-              ...tempObject[key],
-            }
+  async setCurrentItem ({ commit }, name) {
+    itemsDatabase.orderByChild('name').equalTo(name).once("value")
+      .then((snapshot) => {
+        var tempObject = JSON.parse(JSON.stringify(snapshot.toJSON()))
+        for (var key in tempObject) {
+          var itemObject = {
+            ...tempObject[key],
           }
-          commit('setCurrentEditItem', itemObject)
-          resolve()
-        })
-    })
+        }
+        commit('setCurrentEditItem', itemObject)
+      })
+
   },
   // Adds new item to database
   addNewItemToDatabase ({ commit }, item) {
