@@ -2,7 +2,7 @@ import firebase from 'firebase'
 import { router } from '../../main'
 
 const state = () => ({
-  authenticated: false,
+  authenticatedUser: null,
   s3Config: {}
 })
 
@@ -11,8 +11,14 @@ const getters = {
 }
 
 const mutations = {
-  setAuthenticated (state, authenticated) {
-    state.authenticated = authenticated
+  setAuthenticatedUser (state) {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        state.authenticatedUser = user
+      } else {
+        state.authenticatedUser = null
+      }
+    })
   },
   setS3Config (state, config) {
     state.s3Config = {
@@ -37,7 +43,7 @@ const actions = {
           .signInWithEmailAndPassword(email, password)
           .then(() => {
             // Signed in
-            commit("setAuthenticated", true);
+            commit("setAuthenticatedUser");
             router.replace({ path: "/edititems" });
           })
           .catch((error) => {
@@ -61,6 +67,11 @@ const actions = {
       var settings = snapshot.toJSON()
       commit("setS3Config", settings)
     })
+  },
+  logout ({ commit }) {
+    firebase.auth().signOut().then(() => {
+      commit("setAuthenticatedUser")
+    }).catch((error) => { console.log(error) })
   }
 }
 

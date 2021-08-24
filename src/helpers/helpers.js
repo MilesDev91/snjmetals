@@ -91,20 +91,25 @@ export function checkDuplicateImagePathInDatabase (fileName, originalItem) {
 
 // Validators
 
-// This function validates price by setting up a decimal count, then we only allow one decimal and no letters. Returns false
+// This function validates price by checking decimal count, then iterating through and only accepting numbers or decimals. Returns false. Also checks length. 10 characters total allowed, which will allow for any useful price.
 export function validatePrice (price) {
-  var decimalCount = 0;
-  for (let i in price) {
-    if (isNaN(parseInt(price[i]))) {
-      if (price[i] == ".") {
-        decimalCount += 1;
-        if (decimalCount > 1) {
-          return false
-        }
-      } else {
-        return false
-      }
-    }
+  console.log(price)
+  // Check length, decimal count, trailing numbers past 2, and character validity
+  if (price.length > 10 ||
+    // This checks number of decimals
+    (price.split(".").length - 1) > 1 ||
+    // This expression checks for more than two trailing numbers and non digit characters
+    (price.match(/\.[0-9]{3}|[^0-9.]/g) || []).length > 0
+  ) {
+    return false
+  }
+  return true
+}
+// Checks for length. Size is open to be mostly anything.
+export function validateSize (size) {
+  // Check for length
+  if (size.length > 10) {
+    return false
   }
   return true
 }

@@ -79,13 +79,13 @@ export default {
   computed: {
     ...mapState({
       products: (state) => state.products.products,
-      authenticated: (state) => state.authentication.authenticated,
+      authenticatedUser: (state) => state.authentication.authenticatedUser,
       s3Config: (state) => state.authentication.s3Config,
     }),
   },
   created() {
     if (process.env.NODE_ENV === "production") {
-      if (!this.authenticated) {
+      if (this.authenticatedUser == null) {
         this.$router.replace({ path: "/login" });
         return;
       }
